@@ -92,3 +92,61 @@ def winner(board):
          return TIE
     return None
 #NINTH FUNCTION
+def human_move(board):
+    legal=legal_moves(board)
+    move=None;
+    while move not in legal:
+        move=ask_num("where will you move(0-8)",0,NUM_SQUARES)
+        if move not in legal:
+            print("\nyou idiot that's not an option\n")
+    return move
+#tenth function
+def next_turn(turn):
+    if turn==X:
+        return O
+    else:
+        return X
+#eleventh function
+def congrat_winner(winner,humanPiece,computerPiece):
+    if winner==TIE:
+        print("it's a tie")
+        print("\n you suck but so do I ")
+    else:
+        print(winner,"wins")
+        if  winner==humanPiece:
+            print("you defeated the computer and won")
+        elif  winner==computerPiece:
+            print("you defeated the computer and won")
+#12th function
+def computer_move(board, human, computer):
+    #make a copy of board to work with
+    board=board[:]
+    #the best positions
+    BEST_MOVES=[4,0,2,6,8,1,3,5,7]
+    #if computer can win
+    for move in legal_moves(board):
+        board[move]=computer
+        if winner(board)==computer:
+            print(legal_moves(board))
+            print(move)
+            return move
+        #done checking this move, undo it
+        board[move]=EMPTY
+    #if human can win
+    for move in legal_moves(board):
+        board[move]=human
+        if winner(board)==human:
+            print(legal_moves(board))
+            print(move)
+            return move
+        #done checking this move, undo it
+        board[move]=EMPTY
+
+    #since no one can win on next move use list in best
+    for move in BEST_MOVES:
+        if move in legal_moves(board):
+            print(legal_moves(board))
+            print(move)
+            return move
+    
+            
