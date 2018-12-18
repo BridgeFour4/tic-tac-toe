@@ -116,9 +116,10 @@ def congrat_winner(winner,humanPiece,computerPiece):
         if  winner==humanPiece:
             print("you defeated the computer and won")
         elif  winner==computerPiece:
-            print("you defeated the computer and won")
+            print("you lost to the computer")
 #12th function
 def computer_move(board, human, computer):
+    print("computer is moving")
     #make a copy of board to work with
     board=board[:]
     #the best positions
@@ -127,8 +128,6 @@ def computer_move(board, human, computer):
     for move in legal_moves(board):
         board[move]=computer
         if winner(board)==computer:
-            print(legal_moves(board))
-            print(move)
             return move
         #done checking this move, undo it
         board[move]=EMPTY
@@ -136,8 +135,6 @@ def computer_move(board, human, computer):
     for move in legal_moves(board):
         board[move]=human
         if winner(board)==human:
-            print(legal_moves(board))
-            print(move)
             return move
         #done checking this move, undo it
         board[move]=EMPTY
@@ -145,8 +142,27 @@ def computer_move(board, human, computer):
     #since no one can win on next move use list in best
     for move in BEST_MOVES:
         if move in legal_moves(board):
-            print(legal_moves(board))
-            print(move)
             return move
+def main():
+    display_instructions()
+    board=new_board()
+    win=None
+    turn=None
+    human,computer=pieces()
+    while win==None:
+        turn=next_turn(turn)
+        display_board(board)
+        if turn==human:
+            move=human_move(board)
+            board[move]=human
+        else:
+            move=computer_move(board,human,computer)
+            board[move]=computer
+        win=winner(board)
+    display_board(board)
+    congrat_winner(win,human,computer)
+            
+main()        
+        
     
             
